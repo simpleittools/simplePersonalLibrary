@@ -10,7 +10,7 @@ import (
 
 // TemplateRenderer will render templates
 func TemplateRenderer(w http.ResponseWriter, gohtml string) {
-	templateCache, err := createTemplateCache()
+	templateCache, err := CreateTemplateCache()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -33,7 +33,7 @@ func TemplateRenderer(w http.ResponseWriter, gohtml string) {
 	}
 }
 
-func createTemplateCache() (map[string]*template.Template, error) {
+func CreateTemplateCache() (map[string]*template.Template, error) {
 	pageCache := map[string]*template.Template{}
 
 	pages, err := filepath.Glob("./templates/*.page.gohtml")
