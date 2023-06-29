@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/simpleittools/simplepersonallibrary/pkg/handlers"
 	"net/http"
 )
 
@@ -12,7 +13,7 @@ func main() {
 
 	// TODO: move this to a routes handler
 	http.HandleFunc(
-		"/", Home,
+		"/", handlers.Home,
 	)
 	fmt.Println(fmt.Sprintf("The server is running at http://localhost%s", port))
 	_ = http.ListenAndServe(port, nil)
