@@ -2,27 +2,31 @@ package render
 
 import (
 	"bytes"
+	"github.com/simpleittools/simplepersonallibrary/pkg/config"
 	"html/template"
 	"log"
 	"net/http"
 	"path/filepath"
 )
 
+var app *config.AppConfig
+
+func NewTemplates(a *config.AppConfig) {
+	app = a
+}
+
 // TemplateRenderer will render templates
 func TemplateRenderer(w http.ResponseWriter, gohtml string) {
-	templateCache, err := CreateTemplateCache()
-	if err != nil {
-		log.Fatal(err)
-	}
+	templateCache := app.TemplateCache
 
 	tmpl, ok := templateCache[gohtml]
 	if !ok {
-		log.Fatal(err)
+		log.Println("unable to get pages from cache")
 	}
 
 	buffer := new(bytes.Buffer)
 
-	err = tmpl.Execute(buffer, nil)
+	err := tmpl.Execute(buffer, nil)
 	if err != nil {
 		log.Println(err)
 	}

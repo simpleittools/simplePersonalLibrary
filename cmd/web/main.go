@@ -21,6 +21,8 @@ func main() {
 	}
 
 	app.TemplateCache = templateCache
+
+	render.NewTemplates(&app)
 	// TODO: move this to a routes handler
 	http.HandleFunc(
 		"/", handlers.Home,
