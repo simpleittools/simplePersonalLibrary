@@ -7,5 +7,5 @@ import (
 
 // Home is the home page function
 func Home(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplates(w, "home.page.gohtml")
+	render.TemplateRenderer(w, "home.page.gohtml")
 }
