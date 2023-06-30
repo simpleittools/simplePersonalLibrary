@@ -21,11 +21,15 @@ func main() {
 	}
 
 	app.TemplateCache = templateCache
+	app.UseCache = false
+
+	repo := handlers.NewRepo(&app)
+	handlers.NewHandlers(repo)
 
 	render.NewTemplates(&app)
 	// TODO: move this to a routes handler
 	http.HandleFunc(
-		"/", handlers.Home,
+		"/", handlers.Repo.Home,
 	)
 	fmt.Println(fmt.Sprintf("The server is running at http://localhost%s", port))
 	_ = http.ListenAndServe(port, nil)
