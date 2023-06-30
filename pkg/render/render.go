@@ -3,6 +3,7 @@ package render
 import (
 	"bytes"
 	"github.com/simpleittools/simplepersonallibrary/pkg/config"
+	"github.com/simpleittools/simplepersonallibrary/pkg/models"
 	"html/template"
 	"log"
 	"net/http"
@@ -15,8 +16,12 @@ func NewTemplates(a *config.AppConfig) {
 	app = a
 }
 
+func AddDefaultData(templateData *models.TemplateData) *models.TemplateData {
+	return templateData
+}
+
 // TemplateRenderer will render templates
-func TemplateRenderer(w http.ResponseWriter, gohtml string) {
+func TemplateRenderer(w http.ResponseWriter, gohtml string, templateData *models.TemplateData) {
 	var templateCache map[string]*template.Template
 	if app.UseCache {
 		// create a template cache
@@ -31,8 +36,9 @@ func TemplateRenderer(w http.ResponseWriter, gohtml string) {
 	}
 
 	buffer := new(bytes.Buffer)
+	templateData = AddDefaultData(templateData)
 
-	err := tmpl.Execute(buffer, nil)
+	err := tmpl.Execute(buffer, templateData)
 	if err != nil {
 		log.Println(err)
 	}

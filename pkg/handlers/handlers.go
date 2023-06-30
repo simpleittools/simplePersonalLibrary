@@ -2,12 +2,15 @@ package handlers
 
 import (
 	"github.com/simpleittools/simplepersonallibrary/pkg/config"
+	"github.com/simpleittools/simplepersonallibrary/pkg/models"
 	"github.com/simpleittools/simplepersonallibrary/pkg/render"
 	"net/http"
 )
 
+// Repo is the repository used by the handlers
 var Repo *Repository
 
+// Repository is the repository type
 type Repository struct {
 	App *config.AppConfig
 }
@@ -26,5 +29,28 @@ func NewHandlers(r *Repository) {
 
 // Home is the home page function
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
-	render.TemplateRenderer(w, "home.page.gohtml")
+	// perform some business logic
+	stringMap := make(map[string]string)
+	stringMap["test"] = "Hello, again."
+
+	// send the data to the template
+	render.TemplateRenderer(
+		w, "home.page.gohtml", &models.TemplateData{
+			StringMap: stringMap,
+		},
+	)
+}
+
+// About this is the about page
+func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
+	// perform some business logic
+	stringMap := make(map[string]string)
+	stringMap["test"] = "Hello, again."
+
+	// send the data to the template
+	render.TemplateRenderer(
+		w, "about.page.gohtml", &models.TemplateData{
+			StringMap: stringMap,
+		},
+	)
 }

@@ -31,6 +31,10 @@ func main() {
 	http.HandleFunc(
 		"/", handlers.Repo.Home,
 	)
+	http.HandleFunc(
+		"/about", handlers.Repo.About,
+	)
+
 	fmt.Println(fmt.Sprintf("The server is running at http://localhost%s", port))
 	_ = http.ListenAndServe(port, nil)
 
