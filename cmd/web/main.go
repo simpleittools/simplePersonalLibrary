@@ -27,15 +27,12 @@ func main() {
 	handlers.NewHandlers(repo)
 
 	render.NewTemplates(&app)
-	// TODO: move this to a routes handler
-	http.HandleFunc(
-		"/", handlers.Repo.Home,
-	)
-	http.HandleFunc(
-		"/about", handlers.Repo.About,
-	)
 
 	fmt.Println(fmt.Sprintf("The server is running at http://localhost%s", port))
-	_ = http.ListenAndServe(port, nil)
-
+	server := &http.Server{
+		Addr:    port,
+		Handler: routes(&app),
+	}
+	err = server.ListenAndServe()
+	log.Fatal(err)
 }
