@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 	"github.com/alexedwards/scs/v2"
-	"github.com/simpleittools/simplepersonallibrary/pkg/config"
-	"github.com/simpleittools/simplepersonallibrary/pkg/handlers"
-	"github.com/simpleittools/simplepersonallibrary/pkg/render"
+	"github.com/simpleittools/simplepersonallibrary/internal/config"
+	"github.com/simpleittools/simplepersonallibrary/internal/handlers"
+	"github.com/simpleittools/simplepersonallibrary/internal/render"
 	"log"
 	"net/http"
 	"time"

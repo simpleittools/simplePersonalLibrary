@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"github.com/simpleittools/simplepersonallibrary/pkg/config"
-	"github.com/simpleittools/simplepersonallibrary/pkg/models"
-	"github.com/simpleittools/simplepersonallibrary/pkg/render"
+	"github.com/simpleittools/simplepersonallibrary/internal/config"
+	"github.com/simpleittools/simplepersonallibrary/internal/models"
+	"github.com/simpleittools/simplepersonallibrary/internal/render"
 	"net/http"
 )
 
@@ -35,7 +35,7 @@ func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 
 	// send the data to the template
 	render.TemplateRenderer(
-		w, "home.page.gohtml", &models.TemplateData{
+		w, r, "home.page.gohtml", &models.TemplateData{
 			StringMap: stringMap,
 		},
 	)
@@ -49,7 +49,7 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 
 	// send the data to the template
 	render.TemplateRenderer(
-		w, "about.page.gohtml", &models.TemplateData{
+		w, r, "about.page.gohtml", &models.TemplateData{
 			StringMap: stringMap,
 		},
 	)

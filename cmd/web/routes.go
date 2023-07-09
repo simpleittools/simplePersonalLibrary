@@ -3,8 +3,8 @@ package main
 import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"github.com/simpleittools/simplepersonallibrary/pkg/config"
-	"github.com/simpleittools/simplepersonallibrary/pkg/handlers"
+	"github.com/simpleittools/simplepersonallibrary/internal/config"
+	"github.com/simpleittools/simplepersonallibrary/internal/handlers"
 	"net/http"
 )
 

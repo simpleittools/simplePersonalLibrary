@@ -2,8 +2,9 @@ package render
 
 import (
 	"bytes"
-	"github.com/simpleittools/simplepersonallibrary/pkg/config"
-	"github.com/simpleittools/simplepersonallibrary/pkg/models"
+	"github.com/justinas/nosurf"
+	"github.com/simpleittools/simplepersonallibrary/internal/config"
+	"github.com/simpleittools/simplepersonallibrary/internal/models"
 	"html/template"
 	"log"
 	"net/http"
@@ -16,12 +17,13 @@ func NewTemplates(a *config.AppConfig) {
 	app = a
 }
 
-func AddDefaultData(templateData *models.TemplateData) *models.TemplateData {
+func AddDefaultData(templateData *models.TemplateData, r *http.Request) *models.TemplateData {
+	templateData.CSRFToken = nosurf.Token(r)
 	return templateData
 }
 
 // TemplateRenderer will render templates
-func TemplateRenderer(w http.ResponseWriter, gohtml string, templateData *models.TemplateData) {
+func TemplateRenderer(w http.ResponseWriter, r *http.Request, gohtml string, templateData *models.TemplateData) {
 	var templateCache map[string]*template.Template
 	if app.UseCache {
 		// create a template cache
@@ -36,7 +38,7 @@ func TemplateRenderer(w http.ResponseWriter, gohtml string, templateData *models
 	}
 
 	buffer := new(bytes.Buffer)
-	templateData = AddDefaultData(templateData)
+	templateData = AddDefaultData(templateData, r)
 
 	err := tmpl.Execute(buffer, templateData)
 	if err != nil {
