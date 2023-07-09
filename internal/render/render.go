@@ -2,6 +2,7 @@ package render
 
 import (
 	"bytes"
+	"fmt"
 	"github.com/justinas/nosurf"
 	"github.com/simpleittools/simplepersonallibrary/internal/config"
 	"github.com/simpleittools/simplepersonallibrary/internal/models"
@@ -11,7 +12,9 @@ import (
 	"path/filepath"
 )
 
+var functions = template.FuncMap{}
 var app *config.AppConfig
+var pathToTemplates = "./templates"
 
 func NewTemplates(a *config.AppConfig) {
 	app = a
@@ -57,7 +60,7 @@ func TemplateRenderer(w http.ResponseWriter, r *http.Request, gohtml string, tem
 func CreateTemplateCache() (map[string]*template.Template, error) {
 	pageCache := map[string]*template.Template{}
 
-	pages, err := filepath.Glob("./templates/*.page.gohtml")
+	pages, err := filepath.Glob(fmt.Sprintf("%s/*.page.gohtml", pathToTemplates))
 	if err != nil {
 		return pageCache, err
 	}
@@ -66,18 +69,18 @@ func CreateTemplateCache() (map[string]*template.Template, error) {
 	for _, page := range pages {
 		pageName := filepath.Base(page)
 
-		templateSet, err := template.New(pageName).ParseFiles(page)
+		templateSet, err := template.New(pageName).Funcs(functions).ParseFiles(page)
 		if err != nil {
 			return pageCache, err
 		}
 
-		layoutFiles, err := filepath.Glob("./templates/*.layout.gohtml")
+		layoutFiles, err := filepath.Glob(fmt.Sprintf("%s/*.layout.gohtml", pathToTemplates))
 		if err != nil {
 			return pageCache, err
 		}
 
 		if len(layoutFiles) > 0 {
-			templateSet, err = templateSet.ParseGlob("./templates/*.layout.gohtml")
+			templateSet, err = templateSet.ParseGlob(fmt.Sprintf("%s/*.layout.gohtml", pathToTemplates))
 			if err != nil {
 				return pageCache, err
 			}
