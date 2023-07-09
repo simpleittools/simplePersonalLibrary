@@ -11,3 +11,4 @@ This application uses
 - [Chi Router version 5](https://github.com/go-chi/chi)
 - [NoSurf version 1](https://github.com/justinas/nosurf)
 - [scs version 2](https://github.com/alexedwards/scs)
+- [GoValidator](https://github.com/asaskevich/govalidator)
