@@ -8,6 +8,7 @@ import (
 	"github.com/simpleittools/simplepersonallibrary/internal/render"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -16,6 +17,8 @@ const port = ":3000"
 
 var app config.AppConfig
 var session *scs.SessionManager
+var infoLog *log.Logger
+var errorLog *log.Logger
 
 func main() {
 	err := run()
@@ -33,6 +36,13 @@ func main() {
 
 func run() error {
 	app.InProduction = false
+
+	infoLog = log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	app.InfoLog = infoLog
+
+	errorLog = log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
+	app.ErrorLog = errorLog
+
 	session = scs.New()
 	session.Lifetime = 24 * time.Hour
 	session.Cookie.Persist = true
